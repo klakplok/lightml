@@ -163,7 +163,7 @@ let new_page ?(path = Paths.gen ()) ?(contents = []) title : page =
   P (title, ref contents, Paths.use path, ref [])
 
 let mkdirs basedir path =
-  
+  ((* TODO *))
 
 let write ?(basedir = ".") (p : page) =
   let written = ref [] in
