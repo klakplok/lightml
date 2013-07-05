@@ -1,4 +1,4 @@
-**lightml** (pronounce lighty-m-l) is an OCaml API to construct well formed static Web sites.
+**LigHTML** (pronounce lighty-m-l) is an OCaml API to construct well formed static Web sites.
 It main features are:
 - Minimalist design, useable for writing a static site or as a back-end
 - Concise, combinator based document writing
