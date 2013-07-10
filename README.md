@@ -1,10 +1,10 @@
-lightml
-=======
-
-A minimalist OCaml API to construct well formed static Web sites
-- Checks the validity of HTML output (at typing time)
-- Checks the unicity of IDs inside every page (at output time)
-- Checks the absence of broken links (internal at typing time and external at output time)
+**LigHTML** (pronounce lighty-m-l) is an OCaml API to construct well formed static Web sites.
+It main features are:
+- Minimalist design, useable for writing a static site or as a back-end
+- Concise, combinator based document writing
+- Validity of HTML output (checked at typing time)
+- Unicity of IDs inside every page (checked at output time)
+- Absence of broken links (internal links checked at typing time, external ones at output time)
 
 **Read this:** LigHTML is for simple usecases, such as adding an HTML
 output back-end to an existing program. It provides interesting
