@@ -3,7 +3,7 @@
    Agreement. See the LICENSE file for more details. *)
 
 (* exported (abstract) types *)
-type page = P of (string * untyped_node list ref * string * string list ref)
+type page = P of (string * untyped_node list ref * untyped_node list * string * string list ref)
 and url = Local of string * string option * bool | Extern of string * string option
 
 (* internal types *)
@@ -16,6 +16,7 @@ and untyped_nodes = untyped_node list
 (* exported types (with a phantom parameter to encode valid nesting) *)
 type 'a node = untyped_node
 type 'a nodes = untyped_nodes
+type meta = untyped_node
 
 (* exported exceptions *)
 exception Duplicate_path of string (* path *)
@@ -150,19 +151,34 @@ let tr ?id ?(cls = []) ?header t =
 let td = builder "td"
 and th = builder "th"
 
+(* meta builders ************************************************************)
+
+
+let style url =
+  elt "link" ~attrs:[A ("rel", Raw "stylesheet") ;
+		     A ("type", Raw "text/css") ;
+		     A ("href", Url url)] []
+let script url =
+  elt "script" ~attrs:[A ("type", Raw "text/javascript") ; A ("src", Url url)] []
+let inline_style code =
+  elt "style" [ cdata code ]
+let inline_script code =
+  elt "script" ~attrs:[A ("type", Raw "text/javascript")] [ cdata code ]
+
 (* main functions ***********************************************************)
 
-let new_page ?(path = gen_path ()) ?(contents = []) title : page =
-  P (title, ref contents, use_path path, ref [])
+let new_page ?path ?(metadata = []) ?(contents = []) title : page =
+  let path = match path with None -> gen_path () | Some p -> p in
+  P (title, ref contents, metadata, use_path path, ref [])
     
-let set_page_contents (P (_, contents, _, l) : page) e =
+let set_page_contents (P (_, contents, _, _, l) : page) e =
   contents := e ;
   l := collect_and_check_ids (elt "fake" e)
 
 let write ?(basedir = ".") (p : page) =
   let written = ref [] in
   let to_write = ref [p] in
-  let do_page title contents path =
+  let do_page title contents metadata path =
     let buf = Buffer.create 100_000 in
     let lvl = ref 0 in
     let indent buf n =
@@ -180,11 +196,11 @@ let write ?(basedir = ".") (p : page) =
 	  if not (Sys.file_exists (basedir ^ "/" ^ v)) then raise (Unbound_url v) ;
 	  Printf.bprintf buf " %s='%s%s'" a v (target t)
 	| A (a, Url (Extern (v, t))) -> Printf.bprintf buf " %s='%s%s'" a v (target t)
-	| Href (P (_, _, path, _) as p, None) ->
+	| Href (P (_, _, _, path, _) as p, None) ->
 	  if not (List.memq p !written) && not (List.memq p !to_write) then
 	    to_write := p :: !to_write ;
 	  Printf.bprintf buf " href='%s'" path
-	| Href (P (_, _, path, tids) as p, Some id) ->
+	| Href (P (_, _, _, path, tids) as p, Some id) ->
 	  if not (List.mem id !tids) then
 	    raise (Unbound_id (path, id)) ;
 	  if not (List.memq p !written) && not (List.memq p !to_write) then
@@ -226,15 +242,13 @@ let write ?(basedir = ".") (p : page) =
     in
     let root = elt "html" [
       (* TODO: customize headers *)
-      elt "head" [
+      elt "head" ([
 	elt "meta" ~attrs:[A ("http-equiv", Raw "content-type") ; A ("content", Raw "text/html; charset=utf-8")] [] ;
 	elt "meta" ~attrs:[A ("name", Raw "robots") ; A ("content", Raw "index, follow")] [] ;
 	elt "meta" ~attrs:[A ("name", Raw "generator") ; A ("content", Raw "LigHTML")] [] ;
-	elt "link" ~attrs:[A ("rel", Raw "stylesheet") ; A ("type", Raw "text/css") ; A ("href", Raw "style.css")] [] ;
-	elt "script" ~attrs:[A ("type", Raw "text/javascript") ; A ("src", Raw "script.js")] [] ;
 	elt "title" [ text title ]
-      ] ;
-      elt "body" !contents
+      ] @ metadata) ;
+      elt "body" contents
     ] in
     do_node root ;
     let t = Buffer.contents buf in
@@ -245,8 +259,8 @@ let write ?(basedir = ".") (p : page) =
     close_out fp
   in
   while !to_write <> [] do
-    let P (title, contents, path, _) as p = List.hd !to_write in
+    let P (title, contents, metadata, path, _) as p = List.hd !to_write in
     written := p :: !written ;
     to_write := List.tl !to_write ;
-    do_page title contents path
+    do_page title !contents metadata path
   done

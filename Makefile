@@ -7,7 +7,6 @@ all: ligHTML.cmo ligHTML.cmx doc
 
 ligHTML.cmo: ligHTML.cmi
 ligHTML.cmx: ligHTML.cmi
-doc: ligHTML.cmo
 
 %.cmo: %.ml
 	$(OCAMLC) -c $<

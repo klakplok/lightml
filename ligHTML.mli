@@ -33,6 +33,9 @@ type page
     {!a_url} nodes or non-HTML objects such as {!img}.*)
 type url
 
+(** The type of meta headers to feed to {!new_page} *)
+type meta
+
 (** {2 Site Building and Writing}. *)
 
 (** The argument is the path itself. *)
@@ -55,7 +58,11 @@ exception Unbound_url of string
     links, you can first build a fake empty document and update it
     later using {!set_page_contents}. A {!Duplicate_id} exception will
     be raised if a page contains som ID more than once. *)
-val new_page : ?path:string -> ?contents:[< `BLOCK | `INLINE | `TEXT ] nodes -> string -> page
+val new_page :
+  ?path:string ->
+  ?metadata:meta list ->
+  ?contents:[< `BLOCK | `INLINE | `TEXT ] nodes ->
+  string -> page
 
 (** Updates the content of a document. A {!Duplicate_id} exception will
     be raised if a page contains som ID more than once. *)
@@ -75,7 +82,7 @@ val write : ?basedir:string -> page -> unit
 val local : ?probe:bool -> ?target:string -> string -> url
 
 (** Build an external URL.
-    @param probe: if [true], checks that a local file exists at the given path. *)
+    @param probe: if [true], checks that a local file exists. *)
 val extern :  ?target:string -> string -> url
 
 (** {2 HTML content creation}. *)
@@ -183,3 +190,18 @@ val ol : ?id:string -> ?cls:string list -> [< `LI ] nodes -> [> `BLOCK ] node
 
 (** A list item both for {!ul} or {!ol}. *)
 val li : ?id:string -> ?cls:string list -> [< `BLOCK | `INLINE | `TEXT ] nodes -> [> `LI ] node
+
+(** {2 Meta Information}. *)
+
+(** A JavaScript file *)
+val script: url -> meta
+
+(** A CSS file *)
+val style: url -> meta
+
+(** A JavaScript code block *)
+val inline_script: string -> meta
+
+(** A CSS code block *)
+val inline_style: string -> meta
+
