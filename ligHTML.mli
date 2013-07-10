@@ -13,16 +13,13 @@
 (** {2 Types}. *)
 
 (** The type of HTML nodes (both elements and text). The type
-    parameter is most of the time a subtype of [[ `TEXT | `INLINE |
-    `BLOCK ]] but some functions have more restrictive inputs or
-    output to ensure validity. For instance, it is impossible to
-    include block elements inside inline elements or to put a link
-    into a link. Specific tags are used locally when dealing with
-    tables and lists. *)
+    parameter is a phantom type (most of the time a subtype of [[
+    `TEXT | `INLINE | `BLOCK ]]) used to restrict the inputs and
+    output of node builders to ensure correct nesting of nodes and
+    thus validity. For instance, it is impossible to include block
+    elements inside inline elements, a link into a link or anything
+    but a list item in a list. *)
 type +'a node
-
-(** A shortcut for lists of HTML nodes. *)
-type 'a nodes = 'a node list
 
 (** The type of a single HTML document, see {!new_page} and
     {!write}. Values of this type are used as target for {!a}
@@ -61,19 +58,20 @@ exception Unbound_url of string
 val new_page :
   ?path:string ->
   ?metadata:meta list ->
-  ?contents:[< `BLOCK | `INLINE | `TEXT ] nodes ->
+  ?contents:[< `BLOCK | `INLINE | `TEXT ] node list ->
   string -> page
 
 (** Updates the content of a document. A {!Duplicate_id} exception will
     be raised if a page contains som ID more than once. *)
-val set_page_contents : page -> [< `BLOCK | `INLINE | `TEXT ] nodes -> unit
+val set_page_contents : page -> [< `BLOCK | `INLINE | `TEXT ] node list -> unit
 
 (** Flushes the website from the given root. Only pages accessible
-    from this root will be written. An {!Unbound_url} exception will be
-    raised if a probed reference to a non existing local URL is
-    encountered. A {!Unbound_id} exception will be raised if a targeted
-    {!a} link is unbound. *)
-val write : ?basedir:string -> page -> unit
+    from this root will be written. The default [basedir] is the
+    current directory. The default [charset] is ["utf-8"]. An
+    {!Unbound_url} exception will be raised if a probed reference to a
+    non existing local URL is encountered. A {!Unbound_id} exception
+    will be raised if a targeted {!a} link is unbound. *)
+val write : ?basedir:string -> ?charset:string -> page -> unit
 
 (** Build an internal URL. If [probe] is [true] (default), a check is
     performed during {!write} to ensure that a local file exists
@@ -107,37 +105,37 @@ val img : ?id:string -> ?cls:string list -> url -> [> `TEXT ] node
 (** {3 Inline Layout}. *)
 
 (** Inline group of inline elements. *)
-val span : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] nodes -> [> `INLINE ] node
+val span : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] node list -> [> `INLINE ] node
 
 (** Subscript text. *)
-val sub : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] nodes -> [> `INLINE ] node
+val sub : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] node list -> [> `INLINE ] node
 
 (** Superscript text. *)
-val sup : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] nodes -> [> `INLINE ] node
+val sup : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] node list -> [> `INLINE ] node
 
 (** Builds an internal link. A specific part of the destination can be
    targeted by putting an ID in it and passing this ID as parameter
    [target]. *)
-val a : ?id:string -> ?cls:string list -> ?target:string -> page -> [< `TEXT ] nodes -> [> `INLINE ] node
+val a : ?id:string -> ?cls:string list -> ?target:string -> page -> [< `TEXT ] node list -> [> `INLINE ] node
 
 (** Builds a link to an external URL (see {!local} and {!extern}). *)
-val a_url : ?id:string -> ?cls:string list -> url -> [< `TEXT ] nodes -> [> `INLINE ] node
+val a_url : ?id:string -> ?cls:string list -> url -> [< `TEXT ] node list -> [> `INLINE ] node
 
 (** Generic inline node, the first argument is the tag. *)
-val inline : string -> ?id:string -> ?cls:string list -> ?attrs:(string * string) list -> [< `INLINE | `TEXT] nodes -> [> `INLINE ] node
+val inline : string -> ?id:string -> ?cls:string list -> ?attrs:(string * string) list -> [< `INLINE | `TEXT] node list -> [> `INLINE ] node
 
 (** {3 Headings}. *)
 
 (** An HTML heading. The first argument is the level between 1 and 6
     (otherwise an [Invalid_argument] exception is raised). *)
-val h : int -> ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] nodes -> [> `BLOCK ] node
+val h : int -> ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] node list -> [> `BLOCK ] node
 
-val h1 : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] nodes -> [> `BLOCK ] node
-val h2 : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] nodes -> [> `BLOCK ] node
-val h3 : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] nodes -> [> `BLOCK ] node
-val h4 : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] nodes -> [> `BLOCK ] node
-val h5 : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] nodes -> [> `BLOCK ] node
-val h6 : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] nodes -> [> `BLOCK ] node
+val h1 : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] node list -> [> `BLOCK ] node
+val h2 : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] node list -> [> `BLOCK ] node
+val h3 : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] node list -> [> `BLOCK ] node
+val h4 : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] node list -> [> `BLOCK ] node
+val h5 : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] node list -> [> `BLOCK ] node
+val h6 : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] node list -> [> `BLOCK ] node
 
 (** {3 Block Layout}. *)
 
@@ -145,51 +143,51 @@ val h6 : ?id:string -> ?cls:string list -> [< `INLINE | `TEXT ] nodes -> [> `BLO
 val br : unit -> [> `BLOCK ] node
 
 (** A block element. *)
-val div : ?id:string -> ?cls:string list -> [< `INLINE | `BLOCK | `TEXT] nodes -> [> `BLOCK ] node
+val div : ?id:string -> ?cls:string list -> [< `INLINE | `BLOCK | `TEXT] node list -> [> `BLOCK ] node
 
 (** A block element for quotations. *)
-val blockquote : ?id:string -> ?cls:string list -> [< `INLINE | `BLOCK | `TEXT] nodes -> [> `BLOCK ] node
+val blockquote : ?id:string -> ?cls:string list -> [< `INLINE | `BLOCK | `TEXT] node list -> [> `BLOCK ] node
 
 (** A block element that contains verbatim text. *)
 val pre : ?id:string -> ?cls:string list -> [< `TEXT ] node -> [> `BLOCK ] node
 
-(** A structurating section block element (invalid). *)
-val section : ?id:string -> ?cls:string list -> [< `INLINE | `BLOCK | `TEXT] nodes -> [> `BLOCK ] node
+(** A structurating section block element. *)
+val section : ?id:string -> ?cls:string list -> [< `INLINE | `BLOCK | `TEXT] node list -> [> `BLOCK ] node
 
-(** A structurating article block element (invalid). *)
-val article : ?id:string -> ?cls:string list -> [< `INLINE | `BLOCK | `TEXT] nodes -> [> `BLOCK ] node
+(** A structurating article block element. *)
+val article : ?id:string -> ?cls:string list -> [< `INLINE | `BLOCK | `TEXT] node list -> [> `BLOCK ] node
 
 (** Generic block node, the first argument is the tag. *)
-val block : string -> ?id:string -> ?cls:string list -> ?attrs:(string * string) list -> [< `INLINE | `BLOCK | `TEXT] nodes -> [> `BLOCK ] node
+val block : string -> ?id:string -> ?cls:string list -> ?attrs:(string * string) list -> [< `INLINE | `BLOCK | `TEXT] node list -> [> `BLOCK ] node
 
 (** {3 Tables}. *)
 
 (** Builds a table from a sequence of rows constructed by {!tr} (at
     least one row must be given otherwise an [Invalid_argument]
     exception will be raised). *)
-val table : ?id:string -> ?cls:string list -> ?headers:[< `TH ] nodes -> [< `TR ] nodes -> [> `BLOCK ] node
+val table : ?id:string -> ?cls:string list -> ?headers:[< `TH ] node list -> [< `TR ] node list -> [> `BLOCK ] node
 
 (** Builds a table row from a sequence of cells constructed by {!td}
     (at least one cell must be given otherwise an [Invalid_argument]
     exception will be raised). *)
-val tr : ?id:string -> ?cls:string list -> ?header:[< `TH ] node -> [< `TD ] nodes -> [> `TR ] node
+val tr : ?id:string -> ?cls:string list -> ?header:[< `TH ] node -> [< `TD ] node list -> [> `TR ] node
 
 (** A table cell. *)
-val td : ?id:string -> ?cls:string list -> [< `BLOCK | `INLINE | `TEXT ] nodes -> [> `TD ] node
+val td : ?id:string -> ?cls:string list -> [< `BLOCK | `INLINE | `TEXT ] node list -> [> `TD ] node
 
 (** A table header cell. *)
-val th : ?id:string -> ?cls:string list -> [< `BLOCK | `INLINE | `TEXT ] nodes -> [> `TH ] node
+val th : ?id:string -> ?cls:string list -> [< `BLOCK | `INLINE | `TEXT ] node list -> [> `TH ] node
 
 (** {3 Lists}. *)
 
 (** An unordered (bullet) list. *)
-val ul : ?id:string -> ?cls:string list -> [< `LI ] nodes -> [> `BLOCK ] node
+val ul : ?id:string -> ?cls:string list -> [< `LI ] node list -> [> `BLOCK ] node
 
 (** An enumerated list. *)
-val ol : ?id:string -> ?cls:string list -> [< `LI ] nodes -> [> `BLOCK ] node
+val ol : ?id:string -> ?cls:string list -> [< `LI ] node list -> [> `BLOCK ] node
 
 (** A list item both for {!ul} or {!ol}. *)
-val li : ?id:string -> ?cls:string list -> [< `BLOCK | `INLINE | `TEXT ] nodes -> [> `LI ] node
+val li : ?id:string -> ?cls:string list -> [< `BLOCK | `INLINE | `TEXT ] node list -> [> `LI ] node
 
 (** {2 Meta Information}. *)
 

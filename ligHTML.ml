@@ -15,7 +15,6 @@ and untyped_nodes = untyped_node list
 
 (* exported types (with a phantom parameter to encode valid nesting) *)
 type 'a node = untyped_node
-type 'a nodes = untyped_nodes
 type meta = untyped_node
 
 (* exported exceptions *)
@@ -175,7 +174,7 @@ let set_page_contents (P (_, contents, _, _, l) : page) e =
   contents := e ;
   l := collect_and_check_ids (elt "fake" e)
 
-let write ?(basedir = ".") (p : page) =
+let write ?(basedir = ".") ?(charset = "utf-8") (p : page) =
   let written = ref [] in
   let to_write = ref [p] in
   let do_page title contents metadata path =
@@ -241,9 +240,9 @@ let write ?(basedir = ".") (p : page) =
 	)
     in
     let root = elt "html" [
-      (* TODO: customize headers *)
       elt "head" ([
-	elt "meta" ~attrs:[A ("http-equiv", Raw "content-type") ; A ("content", Raw "text/html; charset=utf-8")] [] ;
+	elt "meta" ~attrs:[A ("http-equiv", Raw "content-type") ;
+			   A ("content", Raw ("text/html; charset=" ^ charset))] [] ;
 	elt "meta" ~attrs:[A ("name", Raw "robots") ; A ("content", Raw "index, follow")] [] ;
 	elt "meta" ~attrs:[A ("name", Raw "generator") ; A ("content", Raw "LigHTML")] [] ;
 	elt "title" [ text title ]
@@ -254,7 +253,8 @@ let write ?(basedir = ".") (p : page) =
     let t = Buffer.contents buf in
     mkdirs basedir path ;
     let fp = open_out (basedir ^ "/" ^ path) in
-    output_string fp "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" ;
+    (* FIXME: propose doctypes (?) *)
+    (* output_string fp "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n" ; *)
     output_string fp t ;
     close_out fp
   in
