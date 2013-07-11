@@ -1,5 +1,6 @@
 **LigHTML** (pronounce lighty-m-l) is an OCaml API to construct well formed static Web sites.
-It main features are:
+
+**Main features:**
 - Minimalist design, useable for writing a static site or as a back-end
 - Concise, combinator based document writing
 - Validity of HTML output (checked at typing time)
@@ -14,5 +15,5 @@ purpose, such as building dynamic Web sites, you may want to use TyXML
 instead [http://ocsigen.org/tyxml/manual].
 
 **License:** LightML is (C) 2013 Benjamin Canou and distributed under the terms
-of the CeCILL-B Free Software License Agreement. See the LICENSE
+of the CeCILL-B Free Software License Agreement. See the LICENSE.md
 file for more details. 
