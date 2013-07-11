@@ -1,8 +1,7 @@
+# CeCILL-B FREE SOFTWARE LICENSE AGREEMENT
 
-CeCILL-B FREE SOFTWARE LICENSE AGREEMENT
 
-
-    Notice
+##    Notice
 
 This Agreement is a Free Software license agreement that is the result
 of discussions between its authors in order to ensure compliance with
@@ -33,7 +32,7 @@ principal place of business at Domaine de Voluceau, Rocquencourt, BP
 105, 78153 Le Chesnay cedex, France.
 
 
-    Preamble
+##    Preamble
 
 This Agreement is an open source software license intended to give users
 significant freedom to modify and redistribute the software licensed
@@ -66,7 +65,7 @@ This Agreement may apply to any or all software for which the holder of
 the economic rights decides to submit the use thereof to its provisions.
 
 
-    Article 1 - DEFINITIONS
+##    Article 1 - DEFINITIONS
 
 For the purpose of this Agreement, when the following expressions
 commence with a capital letter, they shall have the following meaning:
@@ -121,7 +120,7 @@ Parties: mean both the Licensee and the Licensor.
 These expressions may be used both in singular and plural form.
 
 
-    Article 2 - PURPOSE
+##    Article 2 - PURPOSE
 
 The purpose of the Agreement is the grant by the Licensor to the
 Licensee of a non-exclusive, transferable and worldwide license for the
@@ -129,7 +128,7 @@ Software as set forth in Article 5 hereinafter for the whole term of the
 protection granted by the rights over said Software.
 
 
-    Article 3 - ACCEPTANCE
+##    Article 3 - ACCEPTANCE
 
 3.1 The Licensee shall be deemed as having accepted the terms and
 conditions of this Agreement upon the occurrence of the first of the
@@ -149,22 +148,22 @@ hereinabove, and the Licensee hereby acknowledges that it has read and
 understood it.
 
 
-    Article 4 - EFFECTIVE DATE AND TERM
+##    Article 4 - EFFECTIVE DATE AND TERM
 
 
-      4.1 EFFECTIVE DATE
+###      4.1 EFFECTIVE DATE
 
 The Agreement shall become effective on the date when it is accepted by
 the Licensee as set forth in Article 3.1.
 
 
-      4.2 TERM
+###      4.2 TERM
 
 The Agreement shall remain in force for the entire legal term of
 protection of the economic rights over the Software.
 
 
-    Article 5 - SCOPE OF RIGHTS GRANTED
+##    Article 5 - SCOPE OF RIGHTS GRANTED
 
 The Licensor hereby grants to the Licensee, who accepts, the following
 rights over the Software for any or all use, and for the term of the
@@ -179,7 +178,7 @@ undertakes to have the transferees subscribe to the obligations set
 forth in this paragraph.
 
 
-      5.1 RIGHT OF USE
+###      5.1 RIGHT OF USE
 
 The Licensee is authorized to use the Software, without any limitation
 as to its fields of application, with it being hereinafter specified
@@ -199,7 +198,7 @@ that this comprises:
       to carry out hereunder.
 
 
-      5.2 ENTITLEMENT TO MAKE CONTRIBUTIONS
+###      5.2 ENTITLEMENT TO MAKE CONTRIBUTIONS
 
 The right to make Contributions includes the right to translate, adapt,
 arrange, or make any or all modifications to the Software, and the right
@@ -210,7 +209,7 @@ Software provided that it includes an explicit notice that it is the
 author of said Contribution and indicates the date of the creation thereof.
 
 
-      5.3 RIGHT OF DISTRIBUTION
+###      5.3 RIGHT OF DISTRIBUTION
 
 In particular, the right of distribution includes the right to publish,
 transmit and communicate the Software to the general public on any or
@@ -223,7 +222,7 @@ or unmodified Software to third parties according to the terms and
 conditions set forth hereinafter.
 
 
-        5.3.1 DISTRIBUTION OF SOFTWARE WITHOUT MODIFICATION
+####        5.3.1 DISTRIBUTION OF SOFTWARE WITHOUT MODIFICATION
 
 The Licensee is authorized to distribute true copies of the Software in
 Source Code or Object Code form, provided that said distribution
@@ -242,7 +241,7 @@ cost of acquiring the Source Code shall not exceed the cost of
 transferring the data.
 
 
-        5.3.2 DISTRIBUTION OF MODIFIED SOFTWARE
+####        5.3.2 DISTRIBUTION OF MODIFIED SOFTWARE
 
 If the Licensee makes any Contribution to the Software, the resulting
 Modified Software may be distributed under a license agreement other
@@ -250,14 +249,14 @@ than this Agreement subject to compliance with the provisions of Article
 5.3.4.
 
 
-        5.3.3 DISTRIBUTION OF EXTERNAL MODULES
+####        5.3.3 DISTRIBUTION OF EXTERNAL MODULES
 
 When the Licensee has developed an External Module, the terms and
 conditions of this Agreement do not apply to said External Module, that
 may be distributed under a separate license agreement.
 
 
-        5.3.4 CREDITS
+####        5.3.4 CREDITS
 
 Any Licensee who may distribute a Modified Software hereby expressly
 agrees to:
@@ -285,7 +284,7 @@ External Module designed for use in connection with the Software, the
 Licensee shall submit said External Module to the foregoing obligations.
 
 
-        5.3.5 COMPATIBILITY WITH THE CeCILL AND CeCILL-C LICENSES
+####        5.3.5 COMPATIBILITY WITH THE CeCILL AND CeCILL-C LICENSES
 
 Where a Modified Software contains a Contribution subject to the CeCILL
 license, the provisions set forth in Article 5.3.4 shall be optional.
@@ -294,10 +293,10 @@ A Modified Software may be distributed under the CeCILL-C license. In
 such a case the provisions set forth in Article 5.3.4 shall be optional.
 
 
-    Article 6 - INTELLECTUAL PROPERTY
+##    Article 6 - INTELLECTUAL PROPERTY
 
 
-      6.1 OVER THE INITIAL SOFTWARE
+###      6.1 OVER THE INITIAL SOFTWARE
 
 The Holder owns the economic rights over the Initial Software. Any or
 all use of the Initial Software is subject to compliance with the terms
@@ -309,14 +308,14 @@ The Holder undertakes that the Initial Software will remain ruled at
 least by this Agreement, for the duration set forth in Article 4.2.
 
 
-      6.2 OVER THE CONTRIBUTIONS
+###      6.2 OVER THE CONTRIBUTIONS
 
 The Licensee who develops a Contribution is the owner of the
 intellectual property rights over this Contribution as defined by
 applicable law.
 
 
-      6.3 OVER THE EXTERNAL MODULES
+###      6.3 OVER THE EXTERNAL MODULES
 
 The Licensee who develops an External Module is the owner of the
 intellectual property rights over this External Module as defined by
@@ -324,7 +323,7 @@ applicable law and is free to choose the type of agreement that shall
 govern its distribution.
 
 
-      6.4 JOINT PROVISIONS
+###      6.4 JOINT PROVISIONS
 
 The Licensee expressly undertakes:
 
@@ -341,7 +340,7 @@ measures required to ensure respect of said intellectual property rights
 of the Holder and/or Contributors.
 
 
-    Article 7 - RELATED SERVICES
+##    Article 7 - RELATED SERVICES
 
 7.1 Under no circumstances shall the Agreement oblige the Licensor to
 provide technical assistance or maintenance services for the Software.
@@ -361,7 +360,7 @@ shall be subject of a separate instrument executed between the Licensor
 and the Licensee.
 
 
-    Article 8 - LIABILITY
+##    Article 8 - LIABILITY
 
 8.1 Subject to the provisions of Article 8.2, the Licensee shall be
 entitled to claim compensation for any direct loss it may have suffered
@@ -382,7 +381,7 @@ shall constitute consequential loss and shall not provide entitlement to
 any or all compensation from the Licensor.
 
 
-    Article 9 - WARRANTY
+##    Article 9 - WARRANTY
 
 9.1 The Licensee acknowledges that the scientific and technical
 state-of-the-art when the Software was distributed did not enable all
@@ -429,7 +428,7 @@ prior rights over the name of the Software or as regards the existence
 of a trademark.
 
 
-    Article 10 - TERMINATION
+##    Article 10 - TERMINATION
 
 10.1 In the event of a breach by the Licensee of its obligations
 hereunder, the Licensor may automatically terminate this Agreement
@@ -443,10 +442,10 @@ shall remain valid subject to their having been granted in compliance
 with the terms and conditions hereof.
 
 
-    Article 11 - MISCELLANEOUS
+##    Article 11 - MISCELLANEOUS
 
 
-      11.1 EXCUSABLE EVENTS
+###      11.1 EXCUSABLE EVENTS
 
 Neither Party shall be liable for any or all delay, or failure to
 perform the Agreement, that may be attributable to an event of force
@@ -478,13 +477,13 @@ of a provision of the Agreement, for any reason whatsoever, shall not
 cause the Agreement as a whole to be invalid.
 
 
-      11.5 LANGUAGE
+###      11.5 LANGUAGE
 
 The Agreement is drafted in both French and English and both versions
 are deemed authentic.
 
 
-    Article 12 - NEW VERSIONS OF THE AGREEMENT
+##    Article 12 - NEW VERSIONS OF THE AGREEMENT
 
 12.1 Any person is authorized to duplicate and distribute copies of this
 Agreement.
@@ -500,7 +499,7 @@ only be subsequently distributed under the same version of the Agreement
 or a subsequent version.
 
 
-    Article 13 - GOVERNING LAW AND JURISDICTION
+##    Article 13 - GOVERNING LAW AND JURISDICTION
 
 13.1 The Agreement is governed by French law. The Parties agree to
 endeavor to seek an amicable solution to any disagreements or disputes
